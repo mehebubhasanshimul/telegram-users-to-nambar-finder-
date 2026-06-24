@@ -5,7 +5,7 @@
     <script src="https://cdn.tailwindcss.com"></script>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" />
     <style>
-        /* ফুল স্ক্রিন ব্যাকগ্রাউন্ড GIF সেটআপ */
+        /* ব্যাকগ্রাউন্ডে এখন হাসিখুশি জোকারের GIF */
         body {
             min-height: 100vh;
             display: flex;
@@ -13,23 +13,18 @@
             justify-content: center;
             font-family: system-ui, -apple-system, sans-serif;
             position: relative;
-            background: url('https://media.giphy.com/media/miPqFiFqjXiXm/giphy.gif') no-repeat center center fixed;
+            background: url('https://media.giphy.com/media/zqZVwxcVDkwgR7QB4x/giphy.gif') no-repeat center center fixed;
             background-size: cover;
             overflow-x: hidden;
         }
-        /* ব্যাকগ্রাউন্ড ডার্ক ওভারলে (ডার্ক ভাইব ধরে রাখার জন্য) */
         body::before {
             content: '';
             position: absolute;
             top: 0; left: 0; width: 100%; height: 100%;
-            background: rgba(3, 7, 18, 0.85);
+            background: rgba(3, 7, 18, 0.88);
             z-index: 1;
         }
-        .main-container {
-            position: relative;
-            z-index: 10;
-        }
-        /* গ্লাস মরফিজম প্রিমিয়াম কার্ড */
+        .main-container { position: relative; z-index: 10; }
         .glass-premium {
             background: rgba(15, 23, 42, 0.6);
             backdrop-filter: blur(16px) saturate(180%);
@@ -41,7 +36,6 @@
             background: linear-gradient(135deg, #ef4444, #a855f7, #10b981);
             -webkit-background-clip: text;
             -webkit-text-fill-color: transparent;
-            text-shadow: 0 0 15px rgba(168, 85, 247, 0.3);
         }
         .btn-premium {
             background: linear-gradient(135deg, #4f46e5, #2563eb);
@@ -62,12 +56,9 @@
 <body>
 
 <div class="w-full max-w-md mx-auto p-4 main-container">
-    
-    <!-- হেডার লোগো এবং টাইটেল -->
     <div class="text-center mb-6">
-        <!-- জোকার লোগো GIF -->
         <div class="inline-block relative mb-3">
-            <img src="https://media.giphy.com/media/zqZVwxcVDkwgR7QB4x/giphy.gif" class="w-24 h-24 rounded-full border-2 border-purple-500/50 object-cover shadow-lg shadow-purple-500/20" alt="Joker Logo" />
+            <img src="https://media.giphy.com/media/miPqFiFqjXiXm/giphy.gif" class="w-24 h-24 rounded-full border-2 border-purple-500/50 object-cover shadow-lg" alt="Joker Logo" />
             <span class="absolute bottom-0 right-1 bg-green-500 w-4 h-4 rounded-full border-2 border-slate-900 flex items-center justify-center text-[7px] text-white"><i class="fas fa-check"></i></span>
         </div>
         <h1 class="text-4xl font-extrabold tracking-wider joker-glow-text font-mono uppercase">SHADOW JOKER</h1>
@@ -76,7 +67,6 @@
         </p>
     </div>
 
-    <!-- সার্চ বক্স -->
     <div class="glass-premium rounded-3xl p-5 mb-5">
         <div class="space-y-4">
             <div class="relative">
@@ -89,17 +79,14 @@
         </div>
     </div>
 
-    <!-- রেজাল্ট এরিয়া (যেমনটি image 8045.jpg-তে দেখানো হয়েছে) -->
     <div id="resultArea" class="hidden space-y-5"></div>
 
-    <!-- জয়েন গ্রুপ লিংক এবং ক্রেডিট ফুটার -->
     <div class="mt-6 text-center space-y-4">
         <a href="https://t.me/+inTW2I925HcyMjU1" target="_blank" class="glass-premium w-full max-w-xs mx-auto py-3 px-4 rounded-2xl text-xs text-slate-300 hover:text-white transition-all flex items-center justify-center gap-3 group">
-            <i class="fas fa-users text-purple-400 group-hover:scale-110 transition"></i>
+            <i class="fas fa-users text-purple-400"></i>
             <span>আমাদের গ্রুপে জয়েন করুন</span>
             <i class="fas fa-arrow-right text-[10px] text-purple-400/50 group-hover:translate-x-1 transition"></i>
         </a>
-        
         <div class="text-[10px] text-slate-500 font-mono tracking-wider uppercase pt-2">
             © reverse cyber team help 2026
         </div>
@@ -113,19 +100,12 @@ async function searchUser() {
 
     if(!username) {
         resultArea.classList.remove('hidden');
-        resultArea.innerHTML = `
-            <div class="glass-premium p-4 rounded-3xl text-center text-red-400 text-sm">
-                <i class="fas fa-exclamation-triangle mr-1.5"></i> দয়া করে একটি ইউজারনেম দিন!
-            </div>`;
+        resultArea.innerHTML = `<div class="glass-premium p-4 rounded-3xl text-center text-red-400 text-sm">দয়া করে একটি ইউজারনেম দিন!</div>`;
         return;
     }
 
     resultArea.classList.remove('hidden');
-    resultArea.innerHTML = `
-        <div class="glass-premium p-6 rounded-3xl flex flex-col items-center justify-center">
-            <div class="loader w-8 h-8 rounded-full mb-3"></div>
-            <p class="text-xs text-slate-400 tracking-widest animate-pulse">ডাটা খোঁজা হচ্ছে...</p>
-        </div>`;
+    resultArea.innerHTML = `<div class="glass-premium p-6 rounded-3xl flex flex-col items-center justify-center"><div class="loader w-8 h-8 rounded-full mb-3"></div><p class="text-xs text-slate-400 tracking-widest animate-pulse">ডাটা খোঁজা হচ্ছে...</p></div>`;
 
     try {
         const response = await fetch(`/api/search?username=${encodeURIComponent(username)}`);
@@ -133,25 +113,18 @@ async function searchUser() {
 
         if(json.success && json.data) {
             const uData = json.data;
-            
-            // image 8045.jpg এর অবিকল লেআউটে ডাটা রেন্ডারিং করা হচ্ছে
             resultArea.innerHTML = `
-                <div class="glass-premium p-5 rounded-3xl space-y-5 animate-fade-in">
-                    <!-- প্রোফাইল কার্ড অংশ -->
+                <div class="glass-premium p-5 rounded-3xl space-y-5">
                     <div class="flex flex-col items-center">
                         <div class="relative">
-                            <img src="${uData.photo_url || 'https://ui-avatars.com/api/?name='+(uData.first_name || 'User')+'&background=0f172a&color=a855f7&size=120'}" class="w-24 h-24 rounded-full border-2 border-purple-500/40 object-cover shadow-xl" alt="Avatar"/>
+                            <img src="${uData.photo_url || 'https://ui-avatars.com/api/?name='+(uData.first_name || 'User')+'&background=0f172a&color=a855f7&size=120'}" class="w-24 h-24 rounded-full border-2 border-purple-500/40 object-cover shadow-xl"/>
                             <span class="absolute bottom-0 right-1 bg-green-500 w-5 h-5 rounded-full border-2 border-slate-900 flex items-center justify-center text-[8px] text-white"><i class="fas fa-check"></i></span>
                         </div>
                         <h2 class="text-xl font-bold mt-3 text-white tracking-wide font-mono">${uData.first_name || '—'} ${uData.last_name || ''}</h2>
-                        <a href="https://t.me/${uData.username || ''}" target="_blank" class="text-blue-400 text-xs font-mono hover:underline flex items-center gap-1 mt-1">
-                            <i class="fas fa-link text-[10px]"></i> @${uData.username || 'username'}
-                        </a>
+                        <a href="https://t.me/${uData.username || ''}" target="_blank" class="text-blue-400 text-xs font-mono hover:underline mt-1">@${uData.username || 'username'}</a>
                     </div>
-
-                    <!-- ডাটা গ্রিড লিস্ট (image 8045.jpg থিম) -->
                     <div class="space-y-2.5 pt-2">
-                        <div class="flex items-center justify-between bg-slate-950/40 p-3.5 rounded-xl border border-white/5">
+                        <div class="flex items-xl justify-between bg-slate-950/40 p-3.5 rounded-xl border border-white/5">
                             <span class="text-slate-400 text-xs flex items-center gap-2"><i class="fas fa-id-card text-purple-400 w-4"></i> ID</span>
                             <span class="font-mono text-xs text-slate-200">${uData.id || '—'}</span>
                         </div>
@@ -168,30 +141,16 @@ async function searchUser() {
                             <p class="text-xs text-slate-300 italic font-mono">${uData.bio || 'কোনো বায়ো নেই'}</p>
                         </div>
                     </div>
-
-                    <!-- অ্যাকশন বাটন সমূহ -->
                     <div class="space-y-2 pt-2">
-                        <a href="https://t.me/${uData.username || ''}" target="_blank" class="btn-premium w-full py-3 rounded-xl font-bold text-xs text-white flex items-center justify-center gap-2 uppercase">
-                            <i class="fab fa-telegram-plane"></i> টেলিগ্রামে দেখুন
-                        </a>
-                        <a href="https://t.me/+inTW2I925HcyMjU1" target="_blank" class="w-full py-2.5 rounded-xl bg-slate-950/40 border border-white/5 hover:bg-slate-900/60 text-slate-400 text-xs flex items-center justify-center gap-2 transition-all">
-                            <i class="fas fa-users"></i> জয়েন করুন @SHADOW_JOKER
-                        </a>
+                        <a href="https://t.me/${uData.username || ''}" target="_blank" class="btn-premium w-full py-3 rounded-xl font-bold text-xs text-white flex items-center justify-center gap-2 uppercase">টেলিগ্রামে দেখুন</a>
                     </div>
                 </div>`;
         } else {
-            resultArea.innerHTML = `
-                <div class="glass-premium p-5 rounded-3xl text-center text-amber-400 text-sm">
-                    <i class="fas fa-circle-info mr-1.5"></i> ${json.msg || 'ইউজার পাওয়া যায়নি।'}
-                </div>`;
+            resultArea.innerHTML = `<div class="glass-premium p-5 rounded-3xl text-center text-amber-400 text-sm">${json.msg || 'ইউজার পাওয়া যায়নি।'}</div>`;
         }
     } catch (error) {
-        resultArea.innerHTML = `
-            <div class="glass-premium p-5 rounded-3xl text-center text-red-500 text-sm">
-                <i class="fas fa-circle-xmark mr-1.5"></i> সার্ভার ত্রুটি! আবার চেষ্টা করুন।
-            </div>`;
+        resultArea.innerHTML = `<div class="glass-premium p-5 rounded-3xl text-center text-red-500 text-sm">সার্ভার ত্রুটি! আবার চেষ্টা করুন।</div>`;
     }
 }
 </script>
-
 </body></html>
