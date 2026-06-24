@@ -1,0 +1,197 @@
+<!DOCTYPE html><html lang="bn"><head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>SHADOW JOKER · প্রিমিয়াম ফাইন্ডার</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" />
+    <style>
+        /* ফুল স্ক্রিন ব্যাকগ্রাউন্ড GIF সেটআপ */
+        body {
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-family: system-ui, -apple-system, sans-serif;
+            position: relative;
+            background: url('https://media.giphy.com/media/miPqFiFqjXiXm/giphy.gif') no-repeat center center fixed;
+            background-size: cover;
+            overflow-x: hidden;
+        }
+        /* ব্যাকগ্রাউন্ড ডার্ক ওভারলে (ডার্ক ভাইব ধরে রাখার জন্য) */
+        body::before {
+            content: '';
+            position: absolute;
+            top: 0; left: 0; width: 100%; height: 100%;
+            background: rgba(3, 7, 18, 0.85);
+            z-index: 1;
+        }
+        .main-container {
+            position: relative;
+            z-index: 10;
+        }
+        /* গ্লাস মরফিজম প্রিমিয়াম কার্ড */
+        .glass-premium {
+            background: rgba(15, 23, 42, 0.6);
+            backdrop-filter: blur(16px) saturate(180%);
+            -webkit-backdrop-filter: blur(16px) saturate(180%);
+            border: 1px solid rgba(255, 255, 255, 0.08);
+            box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.8);
+        }
+        .joker-glow-text {
+            background: linear-gradient(135deg, #ef4444, #a855f7, #10b981);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            text-shadow: 0 0 15px rgba(168, 85, 247, 0.3);
+        }
+        .btn-premium {
+            background: linear-gradient(135deg, #4f46e5, #2563eb);
+            transition: all 0.25s ease;
+        }
+        .btn-premium:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 10px 25px -5px rgba(59, 130, 246, 0.6);
+        }
+        .loader {
+            border: 3px solid rgba(255,255,255,0.1);
+            border-top-color: #ef4444;
+            animation: spin 0.8s linear infinite;
+        }
+        @keyframes spin { to { transform: rotate(360deg); } }
+    </style>
+</head>
+<body>
+
+<div class="w-full max-w-md mx-auto p-4 main-container">
+    
+    <!-- হেডার লোগো এবং টাইটেল -->
+    <div class="text-center mb-6">
+        <!-- জোকার লোগো GIF -->
+        <div class="inline-block relative mb-3">
+            <img src="https://media.giphy.com/media/zqZVwxcVDkwgR7QB4x/giphy.gif" class="w-24 h-24 rounded-full border-2 border-purple-500/50 object-cover shadow-lg shadow-purple-500/20" alt="Joker Logo" />
+            <span class="absolute bottom-0 right-1 bg-green-500 w-4 h-4 rounded-full border-2 border-slate-900 flex items-center justify-center text-[7px] text-white"><i class="fas fa-check"></i></span>
+        </div>
+        <h1 class="text-4xl font-extrabold tracking-wider joker-glow-text font-mono uppercase">SHADOW JOKER</h1>
+        <p class="text-[11px] text-slate-400 tracking-widest mt-1 flex items-center justify-center gap-1.5 uppercase">
+            <span class="w-1.5 h-1.5 rounded-full bg-red-500 animate-pulse"></span> প্রিমিয়াম টেলিগ্রাম ইনফো ফাইন্ডার
+        </p>
+    </div>
+
+    <!-- সার্চ বক্স -->
+    <div class="glass-premium rounded-3xl p-5 mb-5">
+        <div class="space-y-4">
+            <div class="relative">
+                <i class="fas fa-at absolute left-4 top-1/2 -translate-y-1/2 text-purple-400 text-sm"></i>
+                <input id="usernameInput" type="text" placeholder="ইউজারনেম দিন (যেমন: @SHADOW_JOKER_CTH)" class="w-full bg-slate-950/60 border border-white/10 rounded-2xl pl-11 pr-4 py-4 text-white placeholder-slate-500 text-sm focus:outline-none focus:border-purple-500 focus:ring-2 focus:ring-purple-500/20 transition-all font-mono" />
+            </div>
+            <button onclick="searchUser()" class="btn-premium w-full py-4 rounded-2xl text-white font-bold text-sm tracking-wide uppercase flex items-center justify-center gap-2">
+                <i class="fas fa-crosshairs"></i> সার্চ করুন · SEARCH
+            </button>
+        </div>
+    </div>
+
+    <!-- রেজাল্ট এরিয়া (যেমনটি image 8045.jpg-তে দেখানো হয়েছে) -->
+    <div id="resultArea" class="hidden space-y-5"></div>
+
+    <!-- জয়েন গ্রুপ লিংক এবং ক্রেডিট ফুটার -->
+    <div class="mt-6 text-center space-y-4">
+        <a href="https://t.me/+inTW2I925HcyMjU1" target="_blank" class="glass-premium w-full max-w-xs mx-auto py-3 px-4 rounded-2xl text-xs text-slate-300 hover:text-white transition-all flex items-center justify-center gap-3 group">
+            <i class="fas fa-users text-purple-400 group-hover:scale-110 transition"></i>
+            <span>আমাদের গ্রুপে জয়েন করুন</span>
+            <i class="fas fa-arrow-right text-[10px] text-purple-400/50 group-hover:translate-x-1 transition"></i>
+        </a>
+        
+        <div class="text-[10px] text-slate-500 font-mono tracking-wider uppercase pt-2">
+            © reverse cyber team help 2026
+        </div>
+    </div>
+</div>
+
+<script>
+async function searchUser() {
+    const username = document.getElementById('usernameInput').value.trim();
+    const resultArea = document.getElementById('resultArea');
+
+    if(!username) {
+        resultArea.classList.remove('hidden');
+        resultArea.innerHTML = `
+            <div class="glass-premium p-4 rounded-3xl text-center text-red-400 text-sm">
+                <i class="fas fa-exclamation-triangle mr-1.5"></i> দয়া করে একটি ইউজারনেম দিন!
+            </div>`;
+        return;
+    }
+
+    resultArea.classList.remove('hidden');
+    resultArea.innerHTML = `
+        <div class="glass-premium p-6 rounded-3xl flex flex-col items-center justify-center">
+            <div class="loader w-8 h-8 rounded-full mb-3"></div>
+            <p class="text-xs text-slate-400 tracking-widest animate-pulse">ডাটা খোঁজা হচ্ছে...</p>
+        </div>`;
+
+    try {
+        const response = await fetch(`/api/search?username=${encodeURIComponent(username)}`);
+        const json = await response.json();
+
+        if(json.success && json.data) {
+            const uData = json.data;
+            
+            // image 8045.jpg এর অবিকল লেআউটে ডাটা রেন্ডারিং করা হচ্ছে
+            resultArea.innerHTML = `
+                <div class="glass-premium p-5 rounded-3xl space-y-5 animate-fade-in">
+                    <!-- প্রোফাইল কার্ড অংশ -->
+                    <div class="flex flex-col items-center">
+                        <div class="relative">
+                            <img src="${uData.photo_url || 'https://ui-avatars.com/api/?name='+(uData.first_name || 'User')+'&background=0f172a&color=a855f7&size=120'}" class="w-24 h-24 rounded-full border-2 border-purple-500/40 object-cover shadow-xl" alt="Avatar"/>
+                            <span class="absolute bottom-0 right-1 bg-green-500 w-5 h-5 rounded-full border-2 border-slate-900 flex items-center justify-center text-[8px] text-white"><i class="fas fa-check"></i></span>
+                        </div>
+                        <h2 class="text-xl font-bold mt-3 text-white tracking-wide font-mono">${uData.first_name || '—'} ${uData.last_name || ''}</h2>
+                        <a href="https://t.me/${uData.username || ''}" target="_blank" class="text-blue-400 text-xs font-mono hover:underline flex items-center gap-1 mt-1">
+                            <i class="fas fa-link text-[10px]"></i> @${uData.username || 'username'}
+                        </a>
+                    </div>
+
+                    <!-- ডাটা গ্রিড লিস্ট (image 8045.jpg থিম) -->
+                    <div class="space-y-2.5 pt-2">
+                        <div class="flex items-center justify-between bg-slate-950/40 p-3.5 rounded-xl border border-white/5">
+                            <span class="text-slate-400 text-xs flex items-center gap-2"><i class="fas fa-id-card text-purple-400 w-4"></i> ID</span>
+                            <span class="font-mono text-xs text-slate-200">${uData.id || '—'}</span>
+                        </div>
+                        <div class="flex items-center justify-between bg-slate-950/40 p-3.5 rounded-xl border border-white/5">
+                            <span class="text-slate-400 text-xs flex items-center gap-2"><i class="fas fa-phone text-purple-400 w-4"></i> নাম্বার</span>
+                            <span class="font-mono text-xs text-slate-200">${uData.phone || 'হাইড করা'}</span>
+                        </div>
+                        <div class="flex items-center justify-between bg-slate-950/40 p-3.5 rounded-xl border border-white/5">
+                            <span class="text-slate-400 text-xs flex items-center gap-2"><i class="fas fa-globe text-purple-400 w-4"></i> দেশ</span>
+                            <span class="font-mono text-xs text-slate-200">${uData.country || 'Bangladesh'}</span>
+                        </div>
+                        <div class="bg-slate-950/40 p-3.5 rounded-xl border border-white/5">
+                            <span class="text-slate-400 text-xs flex items-center gap-2 mb-1"><i class="fas fa-quote-left text-purple-400 w-4"></i> বায়ো</span>
+                            <p class="text-xs text-slate-300 italic font-mono">${uData.bio || 'কোনো বায়ো নেই'}</p>
+                        </div>
+                    </div>
+
+                    <!-- অ্যাকশন বাটন সমূহ -->
+                    <div class="space-y-2 pt-2">
+                        <a href="https://t.me/${uData.username || ''}" target="_blank" class="btn-premium w-full py-3 rounded-xl font-bold text-xs text-white flex items-center justify-center gap-2 uppercase">
+                            <i class="fab fa-telegram-plane"></i> টেলিগ্রামে দেখুন
+                        </a>
+                        <a href="https://t.me/+inTW2I925HcyMjU1" target="_blank" class="w-full py-2.5 rounded-xl bg-slate-950/40 border border-white/5 hover:bg-slate-900/60 text-slate-400 text-xs flex items-center justify-center gap-2 transition-all">
+                            <i class="fas fa-users"></i> জয়েন করুন @SHADOW_JOKER
+                        </a>
+                    </div>
+                </div>`;
+        } else {
+            resultArea.innerHTML = `
+                <div class="glass-premium p-5 rounded-3xl text-center text-amber-400 text-sm">
+                    <i class="fas fa-circle-info mr-1.5"></i> ${json.msg || 'ইউজার পাওয়া যায়নি।'}
+                </div>`;
+        }
+    } catch (error) {
+        resultArea.innerHTML = `
+            <div class="glass-premium p-5 rounded-3xl text-center text-red-500 text-sm">
+                <i class="fas fa-circle-xmark mr-1.5"></i> সার্ভার ত্রুটি! আবার চেষ্টা করুন।
+            </div>`;
+    }
+}
+</script>
+
+</body></html>
