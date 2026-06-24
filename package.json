@@ -1,0 +1,9 @@
+{
+  "name": "shadow-joker-finder",
+  "version": "3.0.0",
+  "type": "module",
+  "main": "api/search.js",
+  "engines": {
+    "node": "20.x"
+  }
+}
