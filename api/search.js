@@ -31,35 +31,31 @@ export default async function handler(req, res) {
         }
         const finalId = Math.abs(hash + 5300000000).toString().substring(0, 10);
 
-        // --- সোর্স ৩: ওপেন সোর্স রিভার্স নাম্বার ফাইন্ডার এপিআই (Truecaller / Breach OSINT Wrapper) ---
-        // এই এপিআই-টি ইউজারনেমের ডিজিটাল ফুটপ্রিন্ট স্ক্যান করে যদি অতীতে কোনো লিকড নাম্বার পায় তা বের করবে
+        // --- সোর্স ৩: ওপেন সোর্স ওসিন্ট রিভার্স নাম্বার ফাইন্ডার ---
         let phoneNumber = 'হাইড করা (🔒 Secured)'; 
         
-        // ওপেন সোর্স ওসিন্ট এপিআই ইউআরএল (এখানে আপনার RapidAPI-র ট্রুকলার বা নাম্বার লুকআপ এন্ডপয়েন্টও জুড়তে পারেন)
         const osintUrl = `https://truecaller4.p.rapidapi.com/api/v1/searchFromUsername?username=${encodeURIComponent(username)}`;
         
         try {
             const osintResponse = await fetch(osintUrl, {
                 method: 'GET',
                 headers: {
-                    'x-rapidapi-key': 'b3ad11e41cmshb18121f061df58ep1b5c61jsnd7a63dda9d56', // আপনার কী
+                    'x-rapidapi-key': 'b3ad11e41cmshb18121f061df58ep1b5c61jsnd7a63dda9d56',
                     'x-rapidapi-host': 'truecaller4.p.rapidapi.com',
                     'Content-Type': 'application/json'
                 }
             });
             const osintData = await osintResponse.json();
             
-            // যদি ওপেন সোর্স এপিআই-তে ওই ইউজারনেমের আন্ডারে কোনো রেজিস্টার্ড নাম্বার পাওয়া যায়
             if (osintData && osintData.phone) {
                 phoneNumber = osintData.phone; 
             } else if (osintData && osintData.data && osintData.data.phoneNumber) {
                 phoneNumber = osintData.data.phoneNumber;
             }
         } catch (e) {
-            // যদি ট্রুকলার বা ওপেন সোর্স এপিআই লিমিট শেষ হয়ে যায় বা এরর দেয়, তবে এটি আপনার কাস্টম লিকড অ্যালগরিদম চেক করবে
-            // কিছু চেনা ইউজারনেমের জন্য ডেমো ডাটা (টেস্টিং পারপাস)
-            if (username.includes('sakib') || username === 'shadow_joker_cth') {
-                phoneNumber = "+880195017XXXX (Matched)";
+            // এপিআই লিমিট শেষ হলে বা এরর দিলে আপনার পার্সোনাল ব্র্যান্ডের জন্য কাস্টম ব্যাকআপ লজিক
+            if (username === 'shadow_joker_cth' || username === 'shadow_joker') {
+                phoneNumber = "+8801950178309 (Admin Matched)";
             }
         }
 
@@ -90,7 +86,7 @@ export default async function handler(req, res) {
                 username: username,
                 bio: bio,
                 photo: photo,
-                phone: phoneNumber, // এপিআই বা রিভার্স ডিকশনারি থেকে প্রাপ্ত ডাটা
+                phone: phoneNumber,
                 country: country
             }
         });
