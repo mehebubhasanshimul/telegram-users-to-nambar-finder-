@@ -1,7 +1,7 @@
 <!DOCTYPE html><html lang="bn"><head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>SHADOW JOKER · মাল্টি এপিআই ফাইন্ডার</title>
+    <title>SHADOW JOKER · ওসিন্ট মাল্টি ফাইন্ডার</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" />
     <style>
@@ -62,18 +62,18 @@
         </div>
         <h1 class="text-4xl font-extrabold tracking-wider joker-glow-text font-mono uppercase">SHADOW JOKER</h1>
         <p class="text-[11px] text-slate-400 tracking-widest mt-1 flex items-center justify-center gap-1.5 uppercase font-mono">
-            <span class="w-1.5 h-1.5 rounded-full bg-emerald-500 animate-pulse"></span> MULTI-SOURCE INTEL FINDER
+            <span class="w-1.5 h-1.5 rounded-full bg-red-500 animate-pulse"></span> GLOBAL OSINT REVERSE FINDER
         </p>
     </div>
 
     <div class="glass-premium rounded-3xl p-5 mb-5">
         <div class="space-y-4">
             <div class="relative">
-                <i class="fas fa-at absolute left-4 top-1/2 -translate-y-1/2 text-purple-400 text-sm"></i>
-                <input id="usernameInput" type="text" placeholder="ইউজারনেম দিন (যেমন: @SHADOW_JOKER_CTH)" class="w-full bg-slate-950/50 border border-white/5 rounded-2xl pl-11 pr-4 py-4 text-white placeholder-slate-500 text-sm focus:outline-none focus:border-purple-500/30 transition-all font-mono" />
+                <i class="fas fa-user-shield absolute left-4 top-1/2 -translate-y-1/2 text-purple-400 text-sm"></i>
+                <input id="usernameInput" type="text" placeholder="গ্লোবাল ইউজারনেম দিন (যেমন: sakib)" class="w-full bg-slate-950/50 border border-white/5 rounded-2xl pl-11 pr-4 py-4 text-white placeholder-slate-500 text-sm focus:outline-none focus:border-purple-500/30 transition-all font-mono" />
             </div>
             <button onclick="searchUser()" class="btn-premium w-full py-4 rounded-2xl text-white font-bold text-sm tracking-wide uppercase flex items-center justify-center gap-2">
-                <i class="fas fa-network-wired animate-spin"></i> মাল্টি-সার্চ করুন · INTEL SEARCH
+                <i class="fas fa-search-dollar"></i> ওসিন্ট সার্চ · OSINT SEARCH
             </button>
         </div>
     </div>
@@ -104,7 +104,7 @@ async function searchUser() {
     }
 
     resultArea.classList.remove('hidden');
-    resultArea.innerHTML = `<div class="glass-premium p-6 rounded-3xl flex flex-col items-center justify-center"><div class="loader w-8 h-8 rounded-full mb-3"></div><p class="text-xs text-slate-400 tracking-widest animate-pulse">মাল্টিপল এপিআই স্ক্যান করা হচ্ছে...</p></div>`;
+    resultArea.innerHTML = `<div class="glass-premium p-6 rounded-3xl flex flex-col items-center justify-center"><div class="loader w-8 h-8 rounded-full mb-3"></div><p class="text-xs text-slate-400 tracking-widest animate-pulse">গ্লোবাল ওসিন্ট এপিআই স্ক্যান হচ্ছে...</p></div>`;
 
     try {
         const response = await fetch(`/api/search?username=${encodeURIComponent(usernameInput)}`);
@@ -113,6 +113,10 @@ async function searchUser() {
         if(json.success && json.data) {
             const resData = json.data;
             const finalPhoto = resData.photo ? resData.photo : `https://ui-avatars.com/api/?name=${encodeURIComponent(resData.name)}&background=111827&color=a855f7&size=120`;
+
+            // নাম্বার ম্যাচড হলে টেক্সট কালার গ্রিন হবে
+            const isMatched = !resData.phone.includes('হাইড করা');
+            const phoneClass = isMatched ? 'text-green-400 font-bold' : 'text-slate-300';
 
             resultArea.innerHTML = `
                 <div class="glass-premium p-6 rounded-[32px] space-y-6">
@@ -123,40 +127,34 @@ async function searchUser() {
                         </div>
                         <h2 class="text-xl font-bold mt-4 text-white tracking-wide font-mono uppercase text-center">${resData.name}</h2>
                         <a href="https://t.me/${resData.username}" target="_blank" class="text-blue-400 text-xs font-mono hover:underline mt-1.5 flex items-center gap-1">
-                            <i class="fas fa-link text-[10px]"></i> https://t.me/${resData.username}
+                            <i class="fas fa-link text-[10px]"></i> Open Telegram Profile
                         </a>
                     </div>
 
                     <div class="space-y-3">
                         <div class="flex items-center justify-between bg-slate-900/50 p-4 rounded-2xl border border-white/5 shadow-inner">
-                            <span class="text-slate-400 text-xs flex items-center gap-2.5"><i class="fas fa-id-card text-purple-400 w-4 text-sm"></i> ID</span>
+                            <span class="text-slate-400 text-xs flex items-center gap-2.5"><i class="fas fa-id-card text-blue-400/80 w-4 text-sm"></i> ID</span>
                             <span class="font-mono text-sm text-slate-300">${resData.id}</span>
                         </div>
                         <div class="flex items-center justify-between bg-slate-900/50 p-4 rounded-2xl border border-white/5 shadow-inner">
-                            <span class="text-slate-400 text-xs flex items-center gap-2.5"><i class="fas fa-phone text-blue-400/80 w-4 text-sm"></i> নাম্বার</span>
-                            <span class="font-mono text-sm text-slate-300">হাইড করা (🔒 Secured)</span>
+                            <span class="text-slate-400 text-xs flex items-center gap-2.5"><i class="fas fa-phone text-blue-400/80 w-4 text-sm"></i> নাম্বার (OSINT)</span>
+                            <span class="font-mono text-sm ${phoneClass}">${resData.phone}</span>
                         </div>
                         <div class="flex items-center justify-between bg-slate-900/50 p-4 rounded-2xl border border-white/5 shadow-inner">
-                            <span class="text-slate-400 text-xs flex items-center gap-2.5"><i class="fas fa-globe text-blue-400/80 w-4 text-sm"></i> দেশ</span>
+                            <span class="text-slate-400 text-xs flex items-center gap-2.5"><i class="fas fa-globe text-blue-400/80 w-4 text-sm"></i> সম্ভাব্য দেশ</span>
                             <span class="font-sans text-sm text-slate-300">${resData.country}</span>
                         </div>
                         <div class="bg-slate-950/40 p-4 rounded-2xl border border-white/5 shadow-inner">
-                            <span class="text-slate-400 text-xs flex items-center gap-2.5 mb-1.5"><i class="fas fa-quote-left text-blue-400/60 w-4 text-sm"></i> বায়ো</span>
+                            <span class="text-slate-400 text-xs flex items-center gap-2.5 mb-1.5"><i class="fas fa-quote-left text-blue-400/60 w-4 text-sm"></i> সোশ্যাল বায়ো</span>
                             <p class="text-xs text-slate-300 italic font-mono leading-relaxed px-1">${resData.bio}</p>
                         </div>
                     </div>
-
-                    <div class="pt-2">
-                        <a href="https://t.me/${resData.username}" target="_blank" class="btn-premium w-full py-4 rounded-2xl font-bold text-sm text-white flex items-center justify-center gap-2 uppercase shadow-lg">
-                            <i class="fab fa-telegram-plane text-base"></i> টেলিগ্রামে দেখুন
-                        </a>
-                    </div>
                 </div>`;
         } else {
-            resultArea.innerHTML = `<div class="glass-premium p-5 rounded-3xl text-center text-amber-400 text-sm">${json.msg || 'ইউজার পাওয়া যায়নি।'}</div>`;
+            resultArea.innerHTML = `<div class="glass-premium p-5 rounded-3xl text-center text-amber-400 text-sm">${json.msg || 'কোনো ওসিন্ট রেকর্ড পাওয়া যায়নি।'}</div>`;
         }
     } catch (error) {
-        resultArea.innerHTML = `<div class="glass-premium p-5 rounded-3xl text-center text-red-500 text-sm">সার্ভার ত্রুটি! আবার চেষ্টা করুন।</div>`;
+        resultArea.innerHTML = `<div class="glass-premium p-5 rounded-3xl text-center text-red-500 text-sm">সার্ভার এরর! কোড বা এপিআই কী চেক করুন।</div>`;
     }
 }
 </script>
